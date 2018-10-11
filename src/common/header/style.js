@@ -45,6 +45,11 @@ export const NavItem = styled.div`
     }
 `;
 
+export const SearchWrapper = styled.div`
+    position: relative;
+    float: left;
+`;
+
 export const NavSearch = styled.input.attrs({
     placeholder: '搜索'
 })`

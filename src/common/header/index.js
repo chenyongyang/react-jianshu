@@ -6,7 +6,8 @@ import {
     NavItem,
     NavSearch,
     Addition,
-    Button
+    Button,
+    SearchWrapper
 } from './style';
 class Header extends Component {
 
@@ -15,13 +16,22 @@ class Header extends Component {
         this.state = {
             focused: false
         };
-        this.handleSearchClick = this.handleSearchClick.bind(this);
+        this.handleInputFocus = this.handleInputFocus.bind(this);
+        this.handleInputBlur = this.handleInputBlur.bind(this);
     };
 
-    handleSearchClick(){
+    handleInputFocus(){
         this.setState(() => {
             return {
-                focused: !this.state.focused
+                focused: true
+            }
+        })
+    }
+
+    handleInputBlur() {
+        this.setState(() => {
+            return {
+                focused: false
             }
         })
     }
@@ -35,10 +45,13 @@ class Header extends Component {
                     <NavItem className='left'>下载App</NavItem>
                     <NavItem className='right'>登录</NavItem>
                     <NavItem className='right'>Aa</NavItem>
-                    <NavSearch 
-                        className={this.state.focused ? 'focused' : ''}
-                        onClick={this.handleSearchClick}
-                    ></NavSearch>
+                    <SearchWrapper>
+                         <NavSearch 
+                            className={this.state.focused ? 'focused' : ''}
+                            onFucus={this.handleInputFocus}
+                            onBlur={this.handleInputBlur}
+                        ></NavSearch>
+                    </SearchWrapper>
                 </Nav>
                 <Addition>
                     <Button className='write'>写文章</Button>
