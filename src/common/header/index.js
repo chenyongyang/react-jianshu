@@ -10,7 +10,8 @@ import {
     NavSearch,
     Addition,
     Button,
-    SearchWrapper
+    SearchWrapper,
+    SearchInfo
 } from './style';
 
 const Header = (props) => {
@@ -34,6 +35,7 @@ const Header = (props) => {
                         onBlur={props.handleInputBlur}
                     ></NavSearch>
                 </CSSTransition>
+                    <SearchInfo></SearchInfo>
             </SearchWrapper>
         </Nav>
         <Addition>
