@@ -53,7 +53,7 @@ export const SearchWrapper = styled.div`
 export const NavSearch = styled.input.attrs({
     placeholder: '搜索'
 })`
-    width: 240px;
+    width: 160px;
     height: 38px;
     padding: 0 30px 0 20px;
     margin-top: 9px;
@@ -69,7 +69,19 @@ export const NavSearch = styled.input.attrs({
         color: #999;
     }
     &.focused {
-        width: 320px;
+        width: 240px;
+    }
+    &.slide-enter {
+        transition: all .2s ease-out
+    }
+    &.slide-enter-active {
+        width: 240px;
+    }
+    &.slide-exit {
+        transition: all .2s ease-out
+    }
+    &.slide-exit-active {
+        width: 160px;
     }
 `;
 
