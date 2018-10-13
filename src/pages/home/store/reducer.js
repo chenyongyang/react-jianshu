@@ -30,6 +30,8 @@ export default (state = initData, action) => {
             return changeHomeData(state, action);
         case actionTypes.ADD_ARTICLE_LIST:
             return addArticleList(state, action);
+        case actionTypes.TOGGLE_SCROLL_TOP:
+            return state.set("showScroll", action.show);
         default:
             return state;
     }

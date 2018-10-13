@@ -23,6 +23,9 @@ class Home extends Component {
                     <Recommend/>
                     <Writer/>
                 </HomeRight>
+                {this.props.showScroll ? 
+                    <BackTop onClick={this.handleScrollTop}>顶部</BackTop> : null
+                }
             </HomeWrapper>
         )
     }
@@ -32,12 +35,22 @@ class Home extends Component {
     }
 }
 
+const mapState = state => ({
+    showScroll: state.get("home").get("showScroll")
+});
+
 const mapDispatch = (dispatch) => {
     return {
         changeHomeData(){
             dispatch(actionCreators.getHomeInfo());
+        },
+
+        changeScrollTopShow() {
+            dispatch(
+                actionCreators.toggleTopShow(document.documentElement.scrollTop > 100)
+            );
         }
     }
 }
 
-export default connect(null, mapDispatch)(Home);
+export default connect(mapState, mapDispatch)(Home);
