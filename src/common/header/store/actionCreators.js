@@ -16,7 +16,8 @@ export const searchBlur = () => {
 const changeHeaderList = (data)=>{
     return {
         type: actionTypes.CHANGE_HEADER_LIST,
-        payload: fromJS(data)
+        payload: fromJS(data),
+        totalPage: Math.ceil(data.length / 10) // 每页显示10
     }
 }
 
@@ -40,5 +41,12 @@ export const mouseEnter = () => {
 export const mouseLeave = () => {
     return {
         type: actionTypes.MOUSE_LEAVE
+    }
+}
+
+export const changePage = (currentPage) => {
+    return {
+        type: actionTypes.CHANGE_PAGE,
+        currentPage
     }
 }

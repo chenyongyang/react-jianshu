@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { CSSTransition } from 'react-transition-group';
 import { actionCreators } from './store'
+import { toJS } from 'immutable'
 import { 
     HeaderWrapper, Logo, Nav,
     NavItem,NavSearch,Addition,
@@ -11,6 +12,22 @@ import {
 
 
 class Header extends Component{
+
+	getHeaderList(){
+		const pageList = [];
+		const jsList = this.props.list.toJS();
+		if (jsList.length) {
+			for (let i = (this.props.currentPage - 1) * 10; i < this.props.currentPage * 10; i++) {
+				pageList.push(
+					<SearchInfoItem key={i}>{jsList[i]}</SearchInfoItem>
+				)
+			}
+		}
+		return pageList;
+	}
+
+	
+
     render(){
         return (
             <HeaderWrapper>
@@ -45,15 +62,15 @@ class Header extends Component{
 							>
 								<SearchInfoTitle>
 									热门搜索
-									<SearchInfoSwitch>
+									<SearchInfoSwitch
+										onClick={() => this.props.handleChangePage(this.props.currentPage, this.props.totalPage)}
+									>
 											换一批
 									</SearchInfoSwitch>
 								</SearchInfoTitle>
 								<SearchInfoList>
 									{
-										this.props.list.map((item,index)=>{
-											return <SearchInfoItem key={index}>{item}</SearchInfoItem>
-										})
+										this.getHeaderList()
 									}
 								</SearchInfoList>
 							</SearchInfo> : null
@@ -73,7 +90,9 @@ const MapStateToProps = (state) => {
     return {
 		focused: state.get('header').get('focused'),
 		list: state.get('header').get('list'),
-		mouseIn: state.get('header').get('mouseIn')
+		mouseIn: state.get('header').get('mouseIn'),
+		currentPage: state.get('header').get('currentPage'),
+		totalPage: state.get('header').get('totalPage')
     }
 }
 
@@ -92,6 +111,13 @@ const MapDispatchToProps = (dispatch) => {
 		},
 		handleMouseLeave(){
 			dispatch(actionCreators.mouseLeave());
+		},
+		handleChangePage(currentPage, totalPage){
+			if (currentPage < totalPage) {
+				dispatch(actionCreators.changePage(currentPage + 1));
+			} else {
+				dispatch(actionCreators.changePage(1));
+			}
 		}
     }
 }
