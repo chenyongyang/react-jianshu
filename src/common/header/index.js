@@ -26,8 +26,6 @@ class Header extends Component{
 		return pageList;
 	}
 
-	
-
     render(){
         return (
             <HeaderWrapper>
@@ -44,7 +42,7 @@ class Header extends Component{
                             classNames='slide'>
                             <NavSearch
                                 className={this.props.focused ? 'focused' : ''}
-                                onFocus={this.props.handleInputFocus}
+                                onFocus={()=>{this.props.handleInputFocus(this.props.list)}}
                                 onBlur={this.props.handleInputBlur}
                             ></NavSearch>
                         </CSSTransition>
@@ -98,9 +96,13 @@ const MapStateToProps = (state) => {
 
 const MapDispatchToProps = (dispatch) => {
     return {
-        handleInputFocus() {
+        handleInputFocus(list) {
 			// ajax获取数据，通过redux-thunk将异步操作封装到action中
-			dispatch(actionCreators.getList());
+			// 每次点击搜索框触发focus，都会去获取数据，这是无意义的请求发送
+			// 应该只有第一次需要获取
+			if(list.size === 0){
+				dispatch(actionCreators.getList(list));
+			}
             dispatch(actionCreators.searchFocus());
         },
         handleInputBlur() {

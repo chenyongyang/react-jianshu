@@ -16,12 +16,12 @@ export const searchBlur = () => {
 const changeHeaderList = (data)=>{
     return {
         type: actionTypes.CHANGE_HEADER_LIST,
-        payload: fromJS(data),
+        data: fromJS(data),
         totalPage: Math.ceil(data.length / 10) // 每页显示10
     }
 }
 
-export const getList = () => {
+export const getList = (list) => {
     // redux-thunk使得action能够返回函数
     return (dispatch) => {
         axios.get('http://localhost:3001/api/headerlist').then((res)=>{

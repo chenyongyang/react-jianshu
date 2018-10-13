@@ -17,7 +17,11 @@ export default (state = initData, action) => {
         case SEARCH_BLUR:
             return state.set('focused', false);
         case CHANGE_HEADER_LIST:
-            return state.set('list', action.payload).set('totalPage', action.totalPage);   
+            return state.merge({ // 用merge效率比较高，因为merge只运行一次
+                list: action.data,
+                totalPage: action.totalPage
+            });
+            //return state.set('list', action.payload).set('totalPage', action.totalPage);   
         case MOUSE_ENTER:
             return state.set('mouseIn', true);
         case MOUSE_LEAVE:
