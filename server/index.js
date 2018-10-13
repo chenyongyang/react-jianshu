@@ -20,6 +20,20 @@ app.get('/api/headerlist', function (req, res) {
     }));
 });
 
+app.get('/api/home', function (req, res) {
+    res.end(JSON.stringify({
+        success: true,
+        data: []
+    }));
+});
+
+app.get('/api/homeList?page=' + page, function (req, res) {
+    res.end(JSON.stringify({
+        success: true,
+        data: []
+    }));
+});
+
 app.listen(3001, function (req, res) {
     console.log(`server runs`);
 });

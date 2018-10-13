@@ -1,11 +1,10 @@
-import React, { Component } from 'react';
+import React from "react";
+import { WriterWrapper } from "../style";
 
-class Writer extends Component {
-    render() {
-        return (
-            <div>Writer</div>
-        )
-    }
+const Writer = () => {
+    return (
+        <WriterWrapper>Writer模块</WriterWrapper>
+    )
 }
 
 export default Writer;
