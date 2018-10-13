@@ -32,9 +32,17 @@ class Header extends Component{
                             ></NavSearch>
                         </CSSTransition>
                         {
-                            // 这里有一个bug，点击SearchInfoList，会触发onBlur事件
-                            this.props.focused ?
-							<SearchInfo>
+							// 这里有一个bug，点击SearchInfoList，会触发onBlur事件
+							/**
+							 * 本来的解决思路是：阻止事件冒泡，其实并不是这个原因
+							 * 其实是因为list的显示完全由input的onblur状态来决定
+							 * 要想解决，添加控制list显示与否的条件即可
+							 */
+                            this.props.focused || this.props.mouseIn ?
+							<SearchInfo
+								onMouseEnter={this.props.handleMouseEnter}
+								onMouseLeave={this.props.handleMouseLeave}
+							>
 								<SearchInfoTitle>
 									热门搜索
 									<SearchInfoSwitch>
@@ -42,14 +50,11 @@ class Header extends Component{
 									</SearchInfoSwitch>
 								</SearchInfoTitle>
 								<SearchInfoList>
-									<SearchInfoItem>教育</SearchInfoItem>
-									<SearchInfoItem>人文</SearchInfoItem>
-									<SearchInfoItem>教育</SearchInfoItem>
-									<SearchInfoItem>人文</SearchInfoItem>
-									<SearchInfoItem>教育</SearchInfoItem>
-									<SearchInfoItem>人文</SearchInfoItem>
-									<SearchInfoItem>教育</SearchInfoItem>
-									<SearchInfoItem>人文</SearchInfoItem>
+									{
+										this.props.list.map((item,index)=>{
+											return <SearchInfoItem key={index}>{item}</SearchInfoItem>
+										})
+									}
 								</SearchInfoList>
 							</SearchInfo> : null
                         }
@@ -66,7 +71,9 @@ class Header extends Component{
 
 const MapStateToProps = (state) => {
     return {
-        focused: state.get('header').get('focused')
+		focused: state.get('header').get('focused'),
+		list: state.get('header').get('list'),
+		mouseIn: state.get('header').get('mouseIn')
     }
 }
 
@@ -79,7 +86,13 @@ const MapDispatchToProps = (dispatch) => {
         },
         handleInputBlur() {
             dispatch(actionCreators.searchBlur());
-        }
+		},
+		handleMouseEnter(){
+			dispatch(actionCreators.mouseEnter());
+		},
+		handleMouseLeave(){
+			dispatch(actionCreators.mouseLeave());
+		}
     }
 }
 
