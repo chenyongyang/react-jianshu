@@ -3,12 +3,14 @@ import { connect } from 'react-redux';
 import { CSSTransition } from 'react-transition-group';
 import { actionCreators } from './store'
 import { toJS } from 'immutable'
+import { Link, HashRouter as Router } from "react-router-dom"
 import { 
     HeaderWrapper, Logo, Nav,
     NavItem,NavSearch,Addition,
     Button,SearchWrapper, SearchInfo,
     SearchInfoTitle, SearchInfoSwitch, SearchInfoItem, SearchInfoList
 } from './style';
+import { actionCreators as loginActionCreators } from "../../pages/login/store";
 
 
 class Header extends Component{
@@ -28,12 +30,26 @@ class Header extends Component{
 
     render(){
         return (
-            <HeaderWrapper>
-                <Logo />
-                <Nav>
-                    <NavItem className='left active'>首页</NavItem>
-                    <NavItem className='left'>下载App</NavItem>
-                    <NavItem className='right'>登录</NavItem>
+			    <HeaderWrapper>
+					<Router>
+						<Link to="/">
+							<Logo />
+						</Link>
+					</Router>
+			        <Nav>
+			          <NavItem className="left active">首页</NavItem>
+			          <NavItem className="left">下载App</NavItem>
+			          {this.props.login ? (
+			            <NavItem onClick={this.props.logout} className="right">
+			              退出
+			            </NavItem>
+			          ) : (
+						<Router>
+							<Link to="/login">
+								<NavItem className="right">登陆</NavItem>
+							</Link>
+						</Router>
+			          )}
                     <NavItem className='right'>Aa</NavItem>
                     <SearchWrapper>
                         <CSSTransition
@@ -76,7 +92,14 @@ class Header extends Component{
                     </SearchWrapper>
                 </Nav>
                 <Addition>
-                    <Button className='write'>写文章</Button>
+					<Router>
+						<Link to="/write">
+							<Button className="write">
+								写文章
+							</Button>
+						</Link>
+					</Router>
+					
                     <Button className='reg'>注册</Button>
                 </Addition>
             </HeaderWrapper>
@@ -90,7 +113,8 @@ const MapStateToProps = (state) => {
 		list: state.get('header').get('list'),
 		mouseIn: state.get('header').get('mouseIn'),
 		currentPage: state.get('header').get('currentPage'),
-		totalPage: state.get('header').get('totalPage')
+		totalPage: state.get('header').get('totalPage'),
+		login: state.getIn(["login", "login"])
     }
 }
 
@@ -120,7 +144,10 @@ const MapDispatchToProps = (dispatch) => {
 			} else {
 				dispatch(actionCreators.changePage(1));
 			}
-		}
+		},
+		logout() {
+	      dispatch(loginActionCreators.logout());
+	    }
     }
 }
 

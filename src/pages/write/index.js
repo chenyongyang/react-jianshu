@@ -1,0 +1,13 @@
+import React from "react";
+
+class Login extends React.Component{
+    render(){
+        return (
+            <div>
+                写文章的页面
+        </div>
+        )
+    }
+};
+
+export default Login;
