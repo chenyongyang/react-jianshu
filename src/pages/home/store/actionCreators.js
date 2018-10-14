@@ -10,7 +10,7 @@ const addHomeList = (list, nextPage) => {
     }
 };
 
-const changHomeData = (result) => {
+const changeHomeData = (result) => {
     return {
         type: actionTypes.CHANGE_HOME_DATA,
         topicList: result.topicList,
@@ -22,24 +22,26 @@ const changHomeData = (result) => {
 // 首页数据初始化异步操作
 export const getHomeInfo = () => {
     return (dispatch) => {
-        axios.get("/api/home.json").then(res => {
-            const result = res.data.data;
-            dispatch(changHomeData(result));
-        });
+        console.log('首页数据初始化')
+        // axios.get("/api/home").then(res => {
+        //     const result = res.data.data;
+        //     dispatch(changeHomeData(result));
+        // });
     };
 };
 
 // 将获取更多的异步操作封装到actionCreator
 export const getMoreList = page => {
     return (dispatch) => {
-        axios.get("/api/homeList.json?page=" + page).then(res => {
-            const result = res.data.data;
-            dispatch(addHomeList(result, page + 1));
-        });
+        console.log('获取下一页数据')
+        // axios.get("/api/homeList?page=" + page).then(res => {
+        //     const result = res.data.data;
+        //     dispatch(addHomeList(result, page + 1));
+        // });
     };
 };
 
 export const toggleTopShow = show => ({
-    type: constants.TOGGLE_SCROLL_TOP,
+    type: actionTypes.TOGGLE_SCROLL_TOP,
     show
 });
