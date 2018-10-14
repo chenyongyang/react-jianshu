@@ -1,4 +1,4 @@
-### React.js开发简书WebApp
+## React.js开发简书WebApp
 
 ### 页面的数据管理
 每个页面的数据来自于redux，因此每个页面都要维护自己的一份store
