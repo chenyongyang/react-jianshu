@@ -16,6 +16,8 @@ class Detail extends PureComponent {
     }
 
     componentDidMount() {
+        console.log(this.props)
+        // 获取路由参数
         this.props.getDetail(this.props.match.params.id);
     }
 }
@@ -31,4 +33,6 @@ const mapDispatch = dispatch => ({
     }
 });
 
+// 用了loadable.js后，只有loadable.js能够获取Router信息，组件自身获取不到
+// 使用withRouter，使得该组件能够获取到Router的全部信息
 export default connect(mapState, mapDispatch)(withRouter(Detail));
